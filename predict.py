@@ -1,10 +1,11 @@
 import pickle
+import os
 from flask import Flask, request, jsonify
 
 # -----------------------------
 # 1. Load the saved model + vectorizer
 # -----------------------------
-model_file = 'xgb_churn_pipeline.pkl'
+model_file = os.environ.get("MODEL_FILE", "xgb_churn_pipeline.pkl")
 
 with open(model_file, 'rb') as f_in:
     pipeline = pickle.load(f_in)
@@ -19,23 +20,6 @@ app = Flask('churn_prediction')
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    """
-    Expects JSON input representing a customer, e.g.:
-    {
-        "age": 34,
-        "gender": "Female",
-        "subscription_type": "Standard",
-        "watch_hours": 15.3,
-        "last_login_days": 5,
-        "region": "Europe",
-        "device": "Mobile",
-        "payment_method": "PayPal",
-        "number_of_profiles": 3,
-        "avg_watch_time_per_day": 1.2,
-        "favorite_genre": "Drama",
-        "age_group": "26–35"
-    }
-    """
     customer = request.get_json()
 
     # Preprocess input
@@ -53,7 +37,8 @@ def predict():
     return jsonify(result)
 
 # -----------------------------
-# 3. Run Flask app
+# 3. Only run Flask server locally (not used in Render)
 # -----------------------------
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=9696)
+    port = int(os.environ.get("PORT", 9696))
+    app.run(debug=True, host='0.0.0.0', port=port)
