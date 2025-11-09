@@ -82,8 +82,6 @@ Churn prediction is critical for subscription-based services like Netflix. The g
 
 ## **7. Model Deployment**
 
-## Deployment
-
 ### Local Deployment
 
 Run the service locally using Flask:
@@ -114,14 +112,8 @@ python predict.py
 - Output: Churn probability and binary churn prediction.
 
 ### Containerized Deployment (Docker)
-The application can be containerized using Docker:
+The application can be containerized using Docker\
 Dockerfile: Provided in the repository.
-Build image:
-bash
-Copy code
-docker build -t netflix-churn-app .
-Run container:
-
 bash
 Copy code
 ```
@@ -130,7 +122,7 @@ docker build -t netflix-churn .
 ```
 docker run -p 9696:9696 netflix-churn
 ```
-- screenshots of docker running
+- screenshots of docker running and test
 <img width="1356" height="292" alt="docker" src="https://github.com/user-attachments/assets/b413dbb4-06c4-4fed-84da-c9d0c19b9fab" />
 <img width="1128" height="218" alt="test_api" src="https://github.com/user-attachments/assets/13617f43-37d5-4b21-97c2-bc9684780e04" />
 
