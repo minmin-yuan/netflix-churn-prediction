@@ -6,9 +6,8 @@
 
 Churn prediction is critical for subscription-based services like Netflix. The goal of this project is to predict which customers are likely to churn using demographic, behavioral, and subscription data. Accurate predictions allow proactive retention strategies, improving revenue and customer satisfaction.
 
-Dataset: Netflix Customer Churn Prediction 
+- Dataset is publicly available on Kaggle: [Netflix Customer Churn Prediction](https://www.kaggle.com/datasets/vasifasad/netflix-customer-churn-prediction).  
 
-**Goal:** Build a machine learning model to estimate churn probability for each customer to enable proactive retention strategies.
 
 ---
 ## **2. Data Preparation & Cleaning**
@@ -19,22 +18,35 @@ Dataset: Netflix Customer Churn Prediction
 18–25, 26–35, 36–45, 46–60, 60+.**
   The original numeric age has a very weak correlation with churn (-0.003)
 <img width="571" height="455" alt="output_47_0" src="https://github.com/user-attachments/assets/b91e0e4e-31b0-470f-b1b4-e7f879e8a148" />
+
 - **Removed customer_id (identifier, not predictive).**
 - **No missing values in dataset.**
-Categorical Features: gender, region, subscription_type, device, payment_method, favorite_genre, age_group
-Numerical Features: watch_hours, last_login_days, number_of_profiles, avg_watch_time_per_day
+- **Categorical Features:**\
+  gender, region, subscription_type, device, payment_method, favorite_genre, age_group
+- **Numerical Features:** \
+  watch_hours, last_login_days, number_of_profiles, avg_watch_time_per_day
 
 ## **3. Exploratory Data Analysis (EDA)**
 - **Target variable: Churned vs Not Churned (≈50/50 balanced).**
-- **Categorical Analysis:**
-  Subscription Type: Basic users churn most (~62%), Premium least (~44%).
+- **Categorical Analysis:**\
+  Subscription Type: Basic users churn most (~62%), Premium least (~44%).\
   Payment Method: Crypto & Gift Card users churn more (~60%), Debit/Credit less (~44%).
-- **Numerical Analysis:**
-  Strong churn drivers: low engagement (watch_hours, avg_watch_time_per_day) and recency (last_login_days).
+- **Numerical Analysis:**\
+  Strong churn drivers: low engagement (watch_hours, avg_watch_time_per_day) and recency (last_login_days).\
   Weak influence: age, number_of_profiles.
   <img width="798" height="689" alt="output_42_0" src="https://github.com/user-attachments/assets/4b306fd6-89a8-4f10-9e0c-93650d62f026" />
 
 - **Mutual Information Ranking: subscription_type > payment_method > others**
+
+| Feature           | Mutual Information |
+|------------------|------------------|
+| subscription_type | 0.013533         |
+| payment_method    | 0.009823         |
+| favorite_genre    | 0.000639         |
+| region            | 0.000286         |
+| device            | 0.000143         |
+| gender            | 0.000074         |
+
 
 ---
 
@@ -63,8 +75,7 @@ Numerical Features: watch_hours, last_login_days, number_of_profiles, avg_watch_
 ---
 
 ## **6. Reproducibility**
-- Notebook and training script can be executed without errors.  
-- Dataset is publicly available on Kaggle: [Netflix Customer Churn Prediction](https://www.kaggle.com/datasets/vasifasad/netflix-customer-churn-prediction).  
+- Notebook and training script can be executed.  
 - Environment dependencies captured in `environment.yml` (conda) for easy setup.
 
 ---
