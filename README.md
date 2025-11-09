@@ -126,10 +126,10 @@ docker run -p 9696:9696 netflix-churn
 <img width="1356" height="292" alt="docker" src="https://github.com/user-attachments/assets/b413dbb4-06c4-4fed-84da-c9d0c19b9fab" />
 <img width="1128" height="218" alt="test_api" src="https://github.com/user-attachments/assets/13617f43-37d5-4b21-97c2-bc9684780e04" />
 
-### Cloud Deployment (Render / Other Platforms)
+### Cloud Deployment (Render)
 - The service can be deployed to the cloud for remote access:
 - Instructions: Provided in the repository for Render deployment (which is free for limited usage).
-- Service URL: Example: https://netflix-churn-prediction.onrender.com/predict
+- Service URL: https://netflix-churn-prediction.onrender.com/predict
 - Access: Send HTTP POST requests with JSON payloads as shown above.
 - screenshots of Render deployment
 <img width="2122" height="1152" alt="render cloud deployment" src="https://github.com/user-attachments/assets/2dc912f4-61d1-408a-bc25-76b9819ce4ee" />
