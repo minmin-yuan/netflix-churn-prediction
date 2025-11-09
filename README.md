@@ -71,11 +71,63 @@ Numerical Features: watch_hours, last_login_days, number_of_profiles, avg_watch_
 
 ## **7. Model Deployment**
 
+## Deployment
+
 ### Local Deployment
-- **Framework:** Flask  
-- **Usage:**  
-  - API endpoint `/predict` accepts JSON input for a customer.  
-  - Returns churn probability and binary churn prediction.  
-- **Run Command:**  
+
+Run the service locally using Flask:
+
 ```bash
 python predict.py
+```
+- Default Port: 9696
+- Access locally: http://127.0.0.1:9696/predict
+
+- **Input: JSON payload representing a customer, e.g.:**
+```
+{
+  "age": 34,
+  "gender": "Female",
+  "subscription_type": "Standard",
+  "watch_hours": 15.3,
+  "last_login_days": 5,
+  "region": "Europe",
+  "device": "Mobile",
+  "payment_method": "PayPal",
+  "number_of_profiles": 3,
+  "avg_watch_time_per_day": 1.2,
+  "favorite_genre": "Drama",
+  "age_group": "26–35"
+}
+```
+- Output: Churn probability and binary churn prediction.
+
+### Containerized Deployment (Docker)
+The application can be containerized using Docker:
+Dockerfile: Provided in the repository.
+Build image:
+bash
+Copy code
+docker build -t netflix-churn-app .
+Run container:
+
+bash
+Copy code
+```
+docker build -t netflix-churn .
+```
+```
+docker run -p 9696:9696 netflix-churn
+```
+- screenshots of docker running
+<img width="1356" height="292" alt="docker" src="https://github.com/user-attachments/assets/b413dbb4-06c4-4fed-84da-c9d0c19b9fab" />
+<img width="1128" height="218" alt="test_api" src="https://github.com/user-attachments/assets/13617f43-37d5-4b21-97c2-bc9684780e04" />
+
+### Cloud Deployment (Render / Other Platforms)
+- The service can be deployed to the cloud for remote access:
+- Instructions: Provided in the repository for Render deployment (which is free for limited usage).
+- Service URL: Example: https://netflix-churn-prediction.onrender.com/predict
+- Access: Send HTTP POST requests with JSON payloads as shown above.
+- screenshots of Render deployment
+<img width="2122" height="1152" alt="render cloud deployment" src="https://github.com/user-attachments/assets/2dc912f4-61d1-408a-bc25-76b9819ce4ee" />
+<img width="1332" height="532" alt="render test" src="https://github.com/user-attachments/assets/cd9849ef-37da-4061-9adb-dec62f0a0373" />
