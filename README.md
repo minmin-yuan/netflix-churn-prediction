@@ -1,13 +1,10 @@
 # Netflix Customer Churn Prediction
 
-![Python Version](https://img.shields.io/badge/python-3.10-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-
 ---
 
 ## **1. Problem Description**
 
-Netflix wants to predict whether a customer is likely to churn (cancel their subscription) based on demographics, subscription details, and usage patterns.  
+I wants to predict whether a  Netflix customer is likely to churn (cancel their subscription) based on demographics, subscription details, and usage patterns.  
 
 **Goal:** Build a machine learning model to estimate churn probability for each customer to enable proactive retention strategies.
 
