@@ -36,8 +36,10 @@ Churn prediction is critical for subscription-based services like Netflix. The g
   <img width="590" height="290" alt="output_37_4" src="https://github.com/user-attachments/assets/5318b412-facc-41e8-bd06-fad96b8b34ca" />
 
 - **Numerical Analysis:**\
-  Strong churn drivers: low engagement (watch_hours, avg_watch_time_per_day) and recency (last_login_days).\
-  Weak influence: age(which we replaced with categorical age group as mentioned before), number_of_profiles.
+  - Strong churn drivers: 
+    low engagement (watch_hours, avg_watch_time_per_day) and recency (last_login_days).
+  - Weak influence: 
+    age(which is why we replaced it with categorical age group as mentioned before, but here the correlation heatmap was created before the binning step)
   <img width="798" height="689" alt="output_42_0" src="https://github.com/user-attachments/assets/4b306fd6-89a8-4f10-9e0c-93650d62f026" />
 
 - **Mutual Information Ranking: subscription_type > payment_method > others**
@@ -86,40 +88,82 @@ Churn prediction is critical for subscription-based services like Netflix. The g
 
 ## **7. Model Deployment**
 
-### Local Deployment
+Run the service locally using Flask or Gunicorn. This section covers environment setup, installing dependencies, preparing the trained model, running the server, and testing.
 
-Run the service locally using Flask:
+### Local Deployment 
+#### 1. Prepare environment
 
+**Option A — Conda (recommended)**
+
+```bash
+# create environment from provided file
+conda env create -f environment.yml
+
+# activate it
+conda activate netflix-churn
+```
+
+**Option B — pip + venv**
+create and activate a venv
+```bash
+python3 -m venv .venv
+source .venv/bin/activate   # macOS / Linux
+```
+
+Windows (PowerShell)
+```bash
+.venv\Scripts\activate
+```
+
+install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+#### 2. Prepare the trained model
+To train and save the model locally:
+```bash
+python train.py
+```
+#### 3. Run the service
+- **Run Flask dev server**
 ```bash
 python predict.py
 ```
-- Default Port: 9696
-- Access locally: http://127.0.0.1:9696/predict
+Defalut port:9696\
+Access locally: http://127.0.0.1:9696/predict
 
-- **Input: JSON payload representing a customer, e.g.:**
+- **Run the service (production-like) with Gunicorn**
+```bash
+gunicorn --bind 0.0.0.0:9696 predict:app --workers 4
 ```
-{
-  "age": 34,
-  "gender": "Female",
-  "subscription_type": "Standard",
-  "watch_hours": 15.3,
-  "last_login_days": 5,
-  "region": "Europe",
-  "device": "Mobile",
-  "payment_method": "PayPal",
-  "number_of_profiles": 3,
-  "avg_watch_time_per_day": 1.2,
-  "favorite_genre": "Drama",
-  "age_group": "26–35"
-}
+- **Test the API: Use curl or a tool like Postman:**
 ```
-- Output: Churn probability and binary churn prediction.
+curl -X POST http://127.0.0.1:9696/predict \
+  -H "Content-Type: application/json" \
+  -d '{
+    "age": 34,
+    "gender": "Female",
+    "subscription_type": "Standard",
+    "watch_hours": 15.3,
+    "last_login_days": 5,
+    "region": "Europe",
+    "device": "Mobile",
+    "payment_method": "PayPal",
+    "number_of_profiles": 3,
+    "avg_watch_time_per_day": 1.2,
+    "favorite_genre": "Drama",
+    "age_group": "26–35"
+  }'
+```
+- **Output: Churn probability and binary churn prediction.**
 
+
+  
 ### Containerized Deployment (Docker)
 The application can be containerized using Docker\
 Dockerfile: Provided in the repository.
-bash
-Copy code
+
 ```
 docker build -t netflix-churn .
 ```
@@ -132,9 +176,17 @@ docker run -p 9696:9696 netflix-churn
 
 ### Cloud Deployment (Render)
 - The service can be deployed to the cloud for remote access:
-- Instructions: Provided in the repository for Render deployment (which is free for limited usage).
-- Service URL: https://netflix-churn-prediction.onrender.com/predict
+- Instructions for Render deployment (which is free for limited usage):\
+  push project to github repo\
+  Sign up(use github account is the easist) and log in to Render\
+  Once logged in, click New → Web Service\
+  Connect to github repo and select netflix-churn-prediction repo\
+  Click Create Web Service, Render will automatically build docker image, install dependencies from requirements.txt and start
+  the Gunicorn server.\
+  After a minute or two, you’ll get a public URL like: https://netflix-churn-prediction.onrender.com
+- Service URL: https://netflix-churn-prediction.onrender.com/predict (already deployed and can be accessd)
 - Access: Send HTTP POST requests with JSON payloads as shown above.
 - screenshots of Render deployment
 <img width="2122" height="1152" alt="render cloud deployment" src="https://github.com/user-attachments/assets/2dc912f4-61d1-408a-bc25-76b9819ce4ee" />
 <img width="1332" height="532" alt="render test" src="https://github.com/user-attachments/assets/cd9849ef-37da-4061-9adb-dec62f0a0373" />
+<img width="1220" height="878" alt="Snip20251110_7" src="https://github.com/user-attachments/assets/1bf8fc43-159a-4d0a-8d98-171b95e3ca54" />
