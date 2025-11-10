@@ -81,8 +81,8 @@ Churn prediction is critical for subscription-based services like Netflix. The g
 ---
 
 ## **6. Reproducibility**
-- Notebook and training script can be executed.  
-- Environment dependencies captured in `environment.yml` (conda) for easy setup.
+- Notebook and training script can be executed without errors.  
+- Environment dependencies captured in `environment.yml` (conda) for easy setup or `requirements.txt` (pip + venv).
 
 ---
 
@@ -93,7 +93,7 @@ Run the service locally using Flask or Gunicorn. This section covers environment
 ### Local Deployment 
 #### 1. Prepare environment
 
-**Option A — Conda (recommended)**
+**Option A — Conda**
 
 ```bash
 # create environment from provided file
@@ -126,7 +126,7 @@ To train and save the model locally:
 python train.py
 ```
 #### 3. Run the service
-- **Run Flask dev server**
+- **Run the Flask service locally**
 ```bash
 python predict.py
 ```
@@ -137,7 +137,7 @@ Access locally: http://127.0.0.1:9696/predict
 ```bash
 gunicorn --bind 0.0.0.0:9696 predict:app --workers 4
 ```
-- **Test the API: Use curl or a tool like Postman:**
+#### 4.Test the API: Use curl or a tool like Postman:**
 ```
 curl -X POST http://127.0.0.1:9696/predict \
   -H "Content-Type: application/json" \
@@ -176,14 +176,14 @@ docker run -p 9696:9696 netflix-churn
 
 ### Cloud Deployment (Render)
 - The service can be deployed to the cloud for remote access:
-- Instructions for Render deployment (which is free for limited usage):\
-  push project to github repo\
-  Sign up(use github account is the easist) and log in to Render\
-  Once logged in, click New → Web Service\
-  Connect to github repo and select netflix-churn-prediction repo\
-  Click Create Web Service, Render will automatically build docker image, install dependencies from requirements.txt and start
-  the Gunicorn server.\
-  After a minute or two, you’ll get a public URL like: https://netflix-churn-prediction.onrender.com
+- Instructions for Render deployment (which is free for limited usage):
+  1. push project to github repo
+  2. Sign up(use github account is the easist) and log in to Render
+  3. Once logged in, click New → Web Service
+  4. Connect to github repo and select netflix-churn-prediction repo
+  5. Click Create Web Service, Render will automatically build docker image, install dependencies from requirements.txt and start
+  the Gunicorn server.
+  6. After a minute or two, you’ll get a public URL like: https://netflix-churn-prediction.onrender.com
 - Service URL: https://netflix-churn-prediction.onrender.com/predict (already deployed and can be accessd)
 - Access: Send HTTP POST requests with JSON payloads as shown above.
 - screenshots of Render deployment
