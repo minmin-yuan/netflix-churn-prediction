@@ -14,8 +14,8 @@ Churn prediction is critical for subscription-based services like Netflix. The g
 
 - **Removed outliers in avg_watch_time_per_day (max valid value = 24 hours).**
 - **Dropped monthly_fee because it duplicates subscription_type.**
-- **Converted numeric age to categorical age_group to capture non-linear effects on churn:
-18–25, 26–35, 36–45, 46–60, 60+.**
+- **Converted numeric age to categorical age_group to capture non-linear effects on churn:**\
+  18–25, 26–35, 36–45, 46–60, 60+.
   The original numeric age has a very weak correlation with churn (-0.003)
 <img width="571" height="455" alt="output_47_0" src="https://github.com/user-attachments/assets/b91e0e4e-31b0-470f-b1b4-e7f879e8a148" />
 
@@ -30,10 +30,14 @@ Churn prediction is critical for subscription-based services like Netflix. The g
 - **Target variable: Churned vs Not Churned (≈50/50 balanced).**
 - **Categorical Analysis:**\
   Subscription Type: Basic users churn most (~62%), Premium least (~44%).\
+  <img width="590" height="290" alt="output_37_2" src="https://github.com/user-attachments/assets/9069cf30-dd70-4ac2-8692-6c0faeeb6c18" />
+
   Payment Method: Crypto & Gift Card users churn more (~60%), Debit/Credit less (~44%).
+  <img width="590" height="290" alt="output_37_4" src="https://github.com/user-attachments/assets/5318b412-facc-41e8-bd06-fad96b8b34ca" />
+
 - **Numerical Analysis:**\
   Strong churn drivers: low engagement (watch_hours, avg_watch_time_per_day) and recency (last_login_days).\
-  Weak influence: age, number_of_profiles.
+  Weak influence: age(which we replaced with categorical age group as mentioned before), number_of_profiles.
   <img width="798" height="689" alt="output_42_0" src="https://github.com/user-attachments/assets/4b306fd6-89a8-4f10-9e0c-93650d62f026" />
 
 - **Mutual Information Ranking: subscription_type > payment_method > others**
